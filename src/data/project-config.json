@@ -1,0 +1,947 @@
+{
+  "projectInfo": {
+    "id": "86bf82db-b78a-45ba-88b4-e607d5fd948c",
+    "name": "Modern Kitchen Renovation",
+    "description": "Complete kitchen redesign with contemporary elements",
+    "client": {
+      "name": "Sarah Johnson",
+      "email": "sarah.johnson@email.com",
+      "phone": "+1-555-0123"
+    },
+    "location": "Downtown Apartment, Unit 4B",
+    "startDate": "2024-03-15",
+    "endDate": "2024-04-26",
+    "budget": {
+      "total": "₹15,00,000",
+      "used": "₹85,000",
+      "percentage": 5.67
+    },
+    "status": "In Progress"
+  },
+
+  "canvas": {
+    "defaultSize": {
+      "width": 1080,
+      "height": 1080
+    },
+    "grid": {
+      "defaultSize": 20,
+      "color": "#e2e8f0",
+      "snapToGrid": false
+    }
+  },
+
+  "units": {
+    "kitchen": {
+      "unitInfo": {
+        "id": "kitchen",
+        "name": "Kitchen",
+        "icon": "🍳",
+        "description": "Modern kitchen design with contemporary elements"
+      },
+
+      "overview3D": {
+        "images": [
+          "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2000",
+          "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2000",
+          "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=2000",
+          "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=2000",
+          "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000"
+        ],
+        "selectedImageIndex": 0,
+        "summary": {
+          "title": "Modern Kitchen Design Overview",
+          "description": "A contemporary kitchen design featuring clean lines, efficient workflow, and premium finishes. The design incorporates both aesthetic appeal and functional storage solutions.",
+          "stats": [
+            { "label": "Total Elements", "value": "24" },
+            { "label": "Kitchen Area", "value": "180 sq ft" },
+            { "label": "Cabinet Units", "value": "12" },
+            { "label": "Appliances", "value": "6" },
+            { "label": "Lighting Fixtures", "value": "5" },
+            { "label": "Design Style", "value": "Modern" }
+          ]
+        }
+      },
+
+      "questionnaire": {
+        "title": "Kitchen Design Specifications",
+        "description": "Technical specifications and design preferences for entire kitchen",
+        "status": "completed",
+        "questions": [
+          {
+            "id": "installation_method",
+            "question": "How the installation of cabinets will be done?",
+            "answer": "Modular - Minifix Concept",
+            "category": "installation"
+          },
+          {
+            "id": "storage_type",
+            "question": "Type of Storage Cabinet?",
+            "answer": "Swing Door Wardrobe",
+            "category": "storage"
+          },
+          {
+            "id": "swing_door_type",
+            "question": "Type of Swing Door wardrobe?",
+            "answer": "2 Swing Door wardrobe",
+            "category": "storage"
+          },
+          {
+            "id": "sliding_door_type",
+            "question": "Type of Sliding Door wardrobe?",
+            "answer": "2 Door Sliding",
+            "category": "storage"
+          },
+          {
+            "id": "drawer_count",
+            "question": "How Many drawers used in 1 compartment?",
+            "answer": "2 Nos",
+            "category": "hardware"
+          },
+          {
+            "id": "drawer_mechanism",
+            "question": "What mechanism used for drawer?",
+            "answer": "Telescope Channel",
+            "category": "hardware"
+          },
+          {
+            "id": "telescopic_type",
+            "question": "Type of Telescopic channel?",
+            "answer": "Soft Close - Telescopic",
+            "category": "hardware"
+          },
+          {
+            "id": "channel_length",
+            "question": "Nominal length of channel?",
+            "answer": "400 mm",
+            "category": "hardware"
+          },
+          {
+            "id": "carcass_material",
+            "question": "What is the Storage Cabinet Carcass core material?",
+            "answer": "Pre-Laminated HDHMR Board",
+            "category": "materials"
+          },
+          {
+            "id": "carcass_grade",
+            "question": "What is the Storage Cabinet Carcass core material grade?",
+            "answer": "IS 710- BWP Grade",
+            "category": "materials"
+          },
+          {
+            "id": "skin_material",
+            "question": "What is the Storage Cabinet Carcass Skin material?",
+            "answer": "1 mm Color Laminate on both the side of panel",
+            "category": "materials"
+          }
+        ]
+      },
+
+      "projectNotes": [
+        {
+          "id": "kitchen_note_1",
+          "text": "Client prefers warm, neutral colors throughout the kitchen",
+          "date": "2024-03-16",
+          "author": "Designer",
+          "category": "design"
+        },
+        {
+          "id": "kitchen_note_2",
+          "text": "Need to work around existing hardwood floors - they're in excellent condition",
+          "date": "2024-03-18",
+          "author": "Site Survey Team",
+          "category": "constraints"
+        },
+        {
+          "id": "kitchen_note_3",
+          "text": "Budget increased by ₹50,000 for premium granite countertops",
+          "date": "2024-03-20",
+          "author": "Client",
+          "category": "budget"
+        },
+        {
+          "id": "kitchen_note_4",
+          "text": "Confirmed electrical capacity can handle new appliance load",
+          "date": "2024-03-22",
+          "author": "Electrician",
+          "category": "technical"
+        }
+      ],
+
+      "tasks": [
+        {
+          "id": "kitchen_task_1",
+          "name": "Initial Kitchen Consultation",
+          "status": "completed",
+          "date": "2024-03-15",
+          "assignee": "Designer",
+          "description": "Meet with client to understand kitchen requirements"
+        },
+        {
+          "id": "kitchen_task_2",
+          "name": "Kitchen Space Measurement",
+          "status": "completed",
+          "date": "2024-03-18",
+          "assignee": "Survey Team",
+          "description": "Accurate measurements of kitchen space"
+        },
+        {
+          "id": "kitchen_task_3",
+          "name": "Kitchen Mood Board Creation",
+          "status": "completed",
+          "date": "2024-03-22",
+          "assignee": "Designer",
+          "description": "Visual style and color palette for kitchen"
+        },
+        {
+          "id": "kitchen_task_4",
+          "name": "Kitchen Color Scheme Selection",
+          "status": "in-progress",
+          "date": "2024-03-25",
+          "assignee": "Client",
+          "description": "Final approval of kitchen colors and finishes"
+        },
+        {
+          "id": "kitchen_task_5",
+          "name": "Cabinet Manufacturing",
+          "status": "pending",
+          "date": "2024-03-28",
+          "assignee": "Factory",
+          "description": "Custom kitchen cabinet production"
+        },
+        {
+          "id": "kitchen_task_6",
+          "name": "Kitchen Material Sourcing",
+          "status": "pending",
+          "date": "2024-04-02",
+          "assignee": "Procurement Team",
+          "description": "Source all kitchen materials and appliances"
+        },
+        {
+          "id": "kitchen_task_7",
+          "name": "Kitchen Installation Planning",
+          "status": "pending",
+          "date": "2024-04-15",
+          "assignee": "Project Manager",
+          "description": "Detailed kitchen installation timeline"
+        },
+        {
+          "id": "kitchen_task_8",
+          "name": "Final Kitchen Installation",
+          "status": "pending",
+          "date": "2024-04-22",
+          "assignee": "Installation Team",
+          "description": "Complete kitchen installation"
+        }
+      ],
+
+      "spaceSpecifications": [
+        "Natural lighting from south-facing windows",
+        "Existing hardwood flooring (maple, excellent condition)",
+        "High ceilings (10 feet) with crown molding",
+        "Open floor plan connecting to living area",
+        "Adjacent to modern dining room",
+        "Built-in pantry on east wall",
+        "Electrical system updated in 2022",
+        "Plumbing roughed in for island sink",
+        "Gas line available for range",
+        "Adequate ventilation for range hood"
+      ],
+
+      "presets": {
+        "categories": [
+          {
+            "id": "cabinets",
+            "name": "Cabinets",
+            "icon": "🗄️",
+            "description": "Kitchen cabinets and storage solutions",
+            "items": [
+              {
+                "id": "upper_cabinet_30",
+                "name": "Upper Cabinet 30\"",
+                "type": "kitchen_preset",
+                "canvas": { "width": 300, "height": 200 },
+                "elements": [
+                  {
+                    "type": "shape",
+                    "shapeType": "rect",
+                    "width": 300,
+                    "height": 200,
+                    "fill": "transparent",
+                    "stroke": "#5d2f0a",
+                    "strokeWidth": 2
+                  }
+                ]
+              },
+              {
+                "id": "base_cabinet_36",
+                "name": "Base Cabinet 36\"",
+                "type": "kitchen_preset",
+                "canvas": { "width": 360, "height": 150 },
+                "elements": [
+                  {
+                    "type": "shape",
+                    "shapeType": "rect",
+                    "width": 360,
+                    "height": 150,
+                    "fill": "transparent",
+                    "stroke": "#5d2f0a",
+                    "strokeWidth": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "appliances",
+            "name": "Appliances",
+            "icon": "🔌",
+            "description": "Kitchen appliances and fixtures",
+            "items": [
+              {
+                "id": "refrigerator",
+                "name": "Refrigerator",
+                "type": "kitchen_preset",
+                "canvas": { "width": 200, "height": 400 },
+                "elements": [
+                  {
+                    "type": "shape",
+                    "shapeType": "rect",
+                    "width": 200,
+                    "height": 400,
+                    "fill": "#f0f0f0",
+                    "stroke": "#333333",
+                    "strokeWidth": 2
+                  }
+                ]
+              },
+              {
+                "id": "dishwasher",
+                "name": "Dishwasher",
+                "type": "kitchen_preset",
+                "canvas": { "width": 240, "height": 150 },
+                "elements": [
+                  {
+                    "type": "shape",
+                    "shapeType": "rect",
+                    "width": 240,
+                    "height": 150,
+                    "fill": "#e0e0e0",
+                    "stroke": "#666666",
+                    "strokeWidth": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      "elevations": {
+        "main-cooking-wall": {
+          "id": "main-cooking-wall",
+          "name": "Main Cooking Wall",
+          "type": "elevation",
+          "isActive": true,
+          "views": {
+            "external": {
+              "name": "Structural View",
+              "description": "Wall framing, electrical, and plumbing rough-in",
+              "canvas": {
+                "width": 1480,
+                "height": 1480,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [
+                {
+                  "id": "main_wall_frame",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 50,
+                  "y": 100,
+                  "width": 1000,
+                  "height": 600,
+                  "fill": "transparent",
+                  "stroke": "#2d3748",
+                  "strokeWidth": 3,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000
+                },
+                {
+                  "id": "window_opening",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 300,
+                  "y": 200,
+                  "width": 200,
+                  "height": 150,
+                  "fill": "#e2e8f0",
+                  "stroke": "#4a5568",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 1,
+                  "updatedAt": 1710835200000
+                },
+                {
+                  "id": "electrical_outlet_1",
+                  "type": "shape",
+                  "shapeType": "circle",
+                  "x": 800,
+                  "y": 400,
+                  "radius": 15,
+                  "fill": "#ffd700",
+                  "stroke": "#b7791f",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 2,
+                  "updatedAt": 1710835200000
+                },
+                {
+                  "id": "wall_label",
+                  "type": "text",
+                  "x": 500,
+                  "y": 50,
+                  "text": "MAIN COOKING WALL - EXTERNAL VIEW",
+                  "fontSize": 18,
+                  "fontFamily": "Inter",
+                  "fill": "#2d3748",
+                  "fontStyle": "bold",
+                  "align": "center",
+                  "draggable": true,
+                  "z_index": 3,
+                  "updatedAt": 1710835200000,
+                  "width": 600,
+                  "height": 30,
+                  "lineHeight": 1.2,
+                  "letterSpacing": 0,
+                  "rotation": 0,
+                  "textDecoration": "",
+                  "fontVariants": ["400", "700"],
+                  "webFont": false,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                }
+              ],
+              "camera": { "x": 0, "y": 0, "scale": 1 }
+            },
+            "internal": {
+              "name": "Cabinet Installation",
+              "description": "Kitchen cabinets, countertops, and appliances",
+              "canvas": {
+                "width": 1200,
+                "height": 800,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [
+                {
+                  "id": "upper_cabinet_1",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 200,
+                  "y": 150,
+                  "width": 300,
+                  "height": 200,
+                  "fill": "transparent",
+                  "stroke": "#5d2f0a",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "lower_cabinet_1",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 200,
+                  "y": 500,
+                  "width": 300,
+                  "height": 150,
+                  "fill": "transparent",
+                  "stroke": "#5d2f0a",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "countertop",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 180,
+                  "y": 480,
+                  "width": 340,
+                  "height": 20,
+                  "fill": "#696969",
+                  "stroke": "#2f2f2f",
+                  "strokeWidth": 1,
+                  "draggable": true,
+                  "z_index": 1,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "cabinet_handle_1",
+                  "type": "shape",
+                  "shapeType": "circle",
+                  "x": 480,
+                  "y": 250,
+                  "radius": 8,
+                  "fill": "#c0c0c0",
+                  "stroke": "#808080",
+                  "strokeWidth": 1,
+                  "draggable": true,
+                  "z_index": 2,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "internal_label",
+                  "type": "text",
+                  "x": 500,
+                  "y": 50,
+                  "text": "MAIN COOKING WALL - INTERNAL VIEW",
+                  "fontSize": 18,
+                  "fontFamily": "Inter",
+                  "fill": "#2d3748",
+                  "fontStyle": "bold",
+                  "align": "center",
+                  "draggable": true,
+                  "z_index": 3,
+                  "updatedAt": 1710835200000,
+                  "width": 600,
+                  "height": 30,
+                  "lineHeight": 1.2,
+                  "letterSpacing": 0,
+                  "rotation": 0,
+                  "textDecoration": "",
+                  "fontVariants": ["400", "700"],
+                  "webFont": false,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                }
+              ],
+              "camera": { "x": 0, "y": 0, "scale": 1.2 }
+            }
+          }
+        },
+
+        "kitchen-island": {
+          "id": "kitchen-island",
+          "name": "Kitchen Island",
+          "type": "elevation",
+          "isActive": false,
+          "views": {
+            "external": {
+              "name": "Island Structure",
+              "description": "Island framing and utilities",
+              "canvas": {
+                "width": 1000,
+                "height": 600,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [
+                {
+                  "id": "island_base",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 300,
+                  "y": 200,
+                  "width": 400,
+                  "height": 200,
+                  "fill": "#f0f0f0",
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "island_electrical",
+                  "type": "shape",
+                  "shapeType": "circle",
+                  "x": 500,
+                  "y": 150,
+                  "radius": 10,
+                  "fill": "#ffd700",
+                  "stroke": "#b7791f",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 1,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                }
+              ],
+              "camera": { "x": 0, "y": 0, "scale": 1 }
+            },
+            "internal": {
+              "name": "Island Layout",
+              "description": "Island cabinets, seating, and appliances",
+              "canvas": {
+                "width": 1000,
+                "height": 600,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [
+                {
+                  "id": "island_cabinet",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 300,
+                  "y": 250,
+                  "width": 400,
+                  "height": 150,
+                  "fill": "transparent",
+                  "stroke": "#5d2f0a",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "island_countertop",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 280,
+                  "y": 230,
+                  "width": 440,
+                  "height": 20,
+                  "fill": "#696969",
+                  "stroke": "#2f2f2f",
+                  "strokeWidth": 1,
+                  "draggable": true,
+                  "z_index": 1,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "bar_stool_1",
+                  "type": "shape",
+                  "shapeType": "circle",
+                  "x": 200,
+                  "y": 300,
+                  "radius": 25,
+                  "fill": "#654321",
+                  "stroke": "#3e2723",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 2,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "bar_stool_2",
+                  "type": "shape",
+                  "shapeType": "circle",
+                  "x": 750,
+                  "y": 300,
+                  "radius": 25,
+                  "fill": "#654321",
+                  "stroke": "#3e2723",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 2,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                }
+              ],
+              "camera": { "x": 50, "y": 30, "scale": 1.1 }
+            }
+          }
+        },
+
+        "pantry-corner": {
+          "id": "pantry-corner",
+          "name": "Pantry Corner",
+          "type": "elevation",
+          "isActive": false,
+          "views": {
+            "external": {
+              "name": "Pantry Structure",
+              "description": "Pantry framing and electrical rough-in",
+              "canvas": {
+                "width": 1200,
+                "height": 1000,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [
+                {
+                  "id": "pantry_frame",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 200,
+                  "y": 100,
+                  "width": 400,
+                  "height": 700,
+                  "fill": "#f8f9fa",
+                  "stroke": "#2d3748",
+                  "strokeWidth": 3,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "pantry_electrical",
+                  "type": "shape",
+                  "shapeType": "circle",
+                  "x": 400,
+                  "y": 150,
+                  "radius": 8,
+                  "fill": "#ffd700",
+                  "stroke": "#b7791f",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 1,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                }
+              ],
+              "camera": { "x": 0, "y": 0, "scale": 0.8 }
+            },
+            "internal": {
+              "name": "Pantry Storage",
+              "description": "Pantry cabinet and shelving system",
+              "canvas": {
+                "width": 800,
+                "height": 1000,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [
+                {
+                  "id": "pantry_cabinet",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 200,
+                  "y": 100,
+                  "width": 400,
+                  "height": 700,
+                  "fill": "transparent",
+                  "stroke": "#5d2f0a",
+                  "strokeWidth": 3,
+                  "draggable": true,
+                  "z_index": 0,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "pantry_door",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 220,
+                  "y": 120,
+                  "width": 180,
+                  "height": 660,
+                  "fill": "#a0522d",
+                  "stroke": "#5d2f0a",
+                  "strokeWidth": 2,
+                  "draggable": true,
+                  "z_index": 1,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                },
+                {
+                  "id": "pantry_shelves",
+                  "type": "shape",
+                  "shapeType": "rect",
+                  "x": 240,
+                  "y": 200,
+                  "width": 140,
+                  "height": 5,
+                  "fill": "#ddd",
+                  "stroke": "#999",
+                  "strokeWidth": 1,
+                  "draggable": true,
+                  "z_index": 2,
+                  "updatedAt": 1710835200000,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1
+                }
+              ],
+              "camera": { "x": 0, "y": 0, "scale": 0.8 }
+            }
+          }
+        }
+      }
+    },
+
+    "bedroom": {
+      "unitInfo": {
+        "id": "bedroom",
+        "name": "Bedroom",
+        "icon": "🛏️",
+        "description": "Peaceful bedroom design with optimal storage"
+      },
+
+      "overview3D": {
+        "images": [
+          "https://images.unsplash.com/photo-1631679706909-fce9eb2d8703?q=80&w=2000",
+          "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=2000"
+        ],
+        "selectedImageIndex": 0,
+        "summary": {
+          "title": "Bedroom Design Overview",
+          "description": "Peaceful bedroom design with optimal storage and comfort.",
+          "stats": [
+            { "label": "Room Area", "value": "150 sq ft" },
+            { "label": "Storage Units", "value": "6" },
+            { "label": "Furniture Items", "value": "8" },
+            { "label": "Design Style", "value": "Contemporary" }
+          ]
+        }
+      },
+
+      "questionnaire": {
+        "title": "Bedroom Design Specifications",
+        "description": "Bedroom requirements and preferences",
+        "status": "pending",
+        "questions": [
+          {
+            "id": "bed_size",
+            "question": "What size bed is required?",
+            "answer": "King Size",
+            "category": "furniture"
+          },
+          {
+            "id": "storage_needs",
+            "question": "What are the storage requirements?",
+            "answer": "Walk-in closet and under-bed storage",
+            "category": "storage"
+          }
+        ]
+      },
+
+      "projectNotes": [],
+      "tasks": [],
+
+      "spaceSpecifications": [
+        "Master bedroom with en-suite",
+        "Large windows for natural light",
+        "Walk-in closet space available"
+      ],
+
+      "presets": {
+        "categories": [
+          {
+            "id": "furniture",
+            "name": "Furniture",
+            "icon": "🪑",
+            "description": "Bedroom furniture items",
+            "items": [
+              {
+                "id": "king_bed",
+                "name": "King Bed",
+                "type": "bedroom_preset",
+                "canvas": { "width": 300, "height": 200 },
+                "elements": [
+                  {
+                    "type": "shape",
+                    "shapeType": "rect",
+                    "width": 300,
+                    "height": 200,
+                    "fill": "transparent",
+                    "stroke": "#654321",
+                    "strokeWidth": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      "elevations": {
+        "bed-wall": {
+          "id": "bed-wall",
+          "name": "Bed Wall",
+          "type": "elevation",
+          "isActive": false,
+          "views": {
+            "external": {
+              "name": "Wall Structure",
+              "description": "Bedroom wall framing and electrical",
+              "canvas": {
+                "width": 1000,
+                "height": 700,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [],
+              "camera": { "x": 0, "y": 0, "scale": 1 }
+            },
+            "internal": {
+              "name": "Bedroom Layout",
+              "description": "Bed and furniture arrangement",
+              "canvas": {
+                "width": 1000,
+                "height": 700,
+                "backgroundColor": "#ffffff"
+              },
+              "elements": [],
+              "camera": { "x": 0, "y": 0, "scale": 1 }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "lastModified": "2024-03-24T10:30:00Z",
+    "createdBy": "Octopus 2D System",
+    "fileFormat": "octopus-project",
+    "description": "Complete project configuration for interior design tool"
+  }
+}
