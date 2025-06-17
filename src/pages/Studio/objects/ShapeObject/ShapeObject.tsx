@@ -30,8 +30,8 @@ export type ArrowData = {
   Record<string, any>;
 
 type Props = {
-  obj: StageObject & { 
-    isInLassoPreview?: boolean; 
+  obj: StageObject & {
+    isInLassoPreview?: boolean;
     isSelected?: boolean;
     isLocked?: boolean;
     isInLockedSelection?: boolean;
@@ -43,11 +43,11 @@ type Props = {
 
 const ShapeObject = ({ obj, onSelect, stageRef }: Props) => {
   const { id, data, isInLassoPreview, isSelected, isLocked, isInLockedSelection, isDraggable } = obj;
-  
+
   // Get stageRef from context if not passed as prop
   const contextStageRef = useContext(StageRefContext);
   const finalStageRef = stageRef || contextStageRef;
-  
+
   // FIXED: Pass stageRef to drag handlers for smart snapping
   const { onDragStart, onDragEnd, onDragMove } = useDragHandlers(finalStageRef ?? undefined);
 
@@ -58,14 +58,15 @@ const ShapeObject = ({ obj, onSelect, stageRef }: Props) => {
   });
 
   const handleClick = useCallback((e: Konva.KonvaEventObject<MouseEvent>) => {
+    e.target.stopDrag();
     e.evt.stopPropagation();
-    
+    e.evt.preventDefault();
     // Prevent selection if object is locked
     if (isLocked) {
       console.log(`🔒 Shape ${id} is locked, cannot select`);
       return;
     }
-    
+
     onSelect(e);
   }, [onSelect, isLocked, id]);
 
@@ -75,7 +76,8 @@ const ShapeObject = ({ obj, onSelect, stageRef }: Props) => {
       id,
       onClick: handleClick,
       onTap: handleClick,
-      
+      dragDistance: 10,
+
       // FIXED: Add all three drag handlers with logging
       onDragStart: (e: Konva.KonvaEventObject<DragEvent>) => {
         console.log('🎯 Shape onDragStart called for:', id);
@@ -89,7 +91,6 @@ const ShapeObject = ({ obj, onSelect, stageRef }: Props) => {
         console.log('🏁 Shape onDragEnd called for:', id);
         onDragEnd(e, obj);
       },
-      
       x: data.x,
       y: data.y,
       draggable: isDraggable !== false ? data.draggable : false,
@@ -98,11 +99,10 @@ const ShapeObject = ({ obj, onSelect, stageRef }: Props) => {
       offsetX: data.offsetX,
       offsetY: data.offsetY,
       rotation: data.rotation || 0,
-      
       fill: data.fill,
       stroke: data.stroke,
       strokeWidth: data.strokeWidth || 0,
-      
+
       perfectDrawEnabled: false,
       listening: !isLocked,
     };
@@ -146,6 +146,7 @@ const ShapeObject = ({ obj, onSelect, stageRef }: Props) => {
   // Render appropriate shape based on type
   switch (data.shapeType) {
     case ShapeType.RECT:
+      console.log('🔧 ShapeObject render switch:', data.shapeType, 'Props:', visualProps);
       return (
         <Rect
           {...visualProps}

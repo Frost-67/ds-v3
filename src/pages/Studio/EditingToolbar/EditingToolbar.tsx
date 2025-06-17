@@ -1,20 +1,27 @@
-
-import { HStack, Icon, IconButton, Spacer, TabIndicator, Tooltip, Badge } from '@chakra-ui/react';
+// src/pages/Studio/EditingToolbar/EditingToolbar.tsx - ENHANCED VERSION
+import { HStack, Icon, IconButton, Spacer, TabIndicator, Tooltip, Badge, VStack, Tabs, TabList, Tab, Button } from '@chakra-ui/react';
 import { useEffect, useCallback, useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { HiOutlineReply, HiOutlineViewGrid } from 'react-icons/hi';
+import { TbZoomReset } from "react-icons/tb";
+import { FaPalette, FaShapes, FaFont, FaImage, FaEye, FaSave } from 'react-icons/fa';
+import { MdTransform } from 'react-icons/md';
 import { EDITING_TOOLBAR_CONFIG, GRID_AND_SNAP_SETTINGS } from '~/consts/ui';
 import { KeyType } from '~/consts/keys';
 import useStageResize from '~/hooks/use-stage-resize';
 import { StageObjectType } from '~/types/stage-object';
-import ImageEditing from './ImageEditing/ImageEditing';
-import ShapesEditing from './ShapesEditing/ShapesEditing';
-import TextEditing from './TextEditing/TextEditing';
-import { Tabs, TabList, Tab } from '@chakra-ui/react';
-import { TbZoomReset } from "react-icons/tb";
 import Konva from 'konva';
 import { useCanvasContexts } from '~/hooks/use-canvas-contexts';
 import { useAppContext } from '~/context/AppContext';
+import { useEditing } from '~/hooks/use-editing';
+
+// Enhanced editing components
+import UniversalTransformControls from './UniversalControls/TransformControls';
+import UniversalColorControls from './UniversalControls/ColorControls';
+import UniversalEffectsControls from './UniversalControls/EffectsControls';
+import UniversalTextControls from './UniversalControls/UniversalTextControls';
+import UniversalImageControls from './UniversalControls/ImageControls';
+import UniversalShapeControls from './UniversalControls/ShapeControls';
 
 interface EditingToolbarProps {
   stageRef?: React.RefObject<Konva.Stage | null> | null;
@@ -22,30 +29,41 @@ interface EditingToolbarProps {
 
 const EditingToolbar = ({ stageRef }: EditingToolbarProps) => {
   const {
-    objects: stageObjects,
-    selected,
     undo,
     redo,
     getHistoryStatus,
     gridSettings,
     toggleGrid
   } = useCanvasContexts();
+  
+  const {
+    isEditing,
+    selectedObjectType,
+    editingData,
+    activeEditingPanel,
+    isDirty,
+    availableFeatures,
+    setPanel,
+    applyChanges,
+    revert,
+    undo: undoEdit,
+    redo: redoEdit,
+  } = useEditing();
+
   const GridSettings = gridSettings || { ...GRID_AND_SNAP_SETTINGS };
   const { activeUnitId, activeElevationId, activeView, setActiveView } = useAppContext();
   const { resetZoom } = useStageResize({ stageRef });
 
-  // Track operations to prevent saving during undo/redo AND after JSON load
+  // Track operations to prevent saving during undo/redo
   const isUndoRedoOperationRef = useRef(false);
-  const isInitialLoadRef = useRef(true); //  Track if this is initial load
+  const isInitialLoadRef = useRef(true);
 
-  //  Get current history status
+  // Get current history status
   const historyStatus = getHistoryStatus();
 
   const handleUndo = useCallback(() => {
     isUndoRedoOperationRef.current = true;
     undo();
-
-    // Reset flag after operation
     setTimeout(() => {
       isUndoRedoOperationRef.current = false;
     }, 100);
@@ -54,220 +72,398 @@ const EditingToolbar = ({ stageRef }: EditingToolbarProps) => {
   const handleRedo = useCallback(() => {
     isUndoRedoOperationRef.current = true;
     redo();
-
     setTimeout(() => {
       isUndoRedoOperationRef.current = false;
     }, 100);
   }, [redo]);
 
-  //  Reset initial load flag when context changes
-  useEffect(() => {
-    isInitialLoadRef.current = true;
-    console.log(`🔄 Context changed - marking as initial load`);
-  }, [historyStatus.contextId]);
-
-  //  Mark as no longer initial load after first user action
-  useEffect(() => {
-    if (isInitialLoadRef.current && stageObjects.length > 0 && historyStatus.pastCount > 0) {
-      isInitialLoadRef.current = false;
-      console.log(`👤 User action detected - no longer initial load`);
-    }
-  }, [stageObjects.length, historyStatus.pastCount]);
-
-  //  Hotkeys with proper context awareness
+  // Hotkeys
   useHotkeys(KeyType.UNDO, (e) => {
     e.preventDefault();
-    if (historyStatus.canUndo) {
+    if (isEditing && editingData) {
+      undoEdit();
+    } else if (historyStatus.canUndo) {
       handleUndo();
     }
   }, {
-    enabled: historyStatus.canUndo
+    enabled: isEditing ? true : historyStatus.canUndo
   });
 
   useHotkeys(KeyType.REDO, (e) => {
     e.preventDefault();
-    if (historyStatus.canRedo) {
+    if (isEditing && editingData) {
+      redoEdit();
+    } else if (historyStatus.canRedo) {
       handleRedo();
     }
   }, {
-    enabled: historyStatus.canRedo
+    enabled: isEditing ? true : historyStatus.canRedo
   });
+
   useHotkeys(KeyType.GRID, (e) => {
     e.preventDefault();
     toggleGrid();
   }, {
     enabled: true
   });
-  const getSelectedObject = () => {
-    if (selected.length === 1 && stageObjects) {
-      return stageObjects.find((obj) => obj.id === selected[0]);
+
+  // Auto-save shortcut
+  useHotkeys('ctrl+s', (e) => {
+    e.preventDefault();
+    if (isEditing && isDirty) {
+      applyChanges();
     }
-    return null;
-  };
+  }, {
+    enabled: isEditing && isDirty
+  });
 
-  const selectedObject = getSelectedObject();
+  // Get editing panel tabs based on object type
+  const getEditingTabs = useCallback(() => {
+    if (!isEditing || !selectedObjectType || !availableFeatures) return [];
 
-  const renderEditing = () => {
-    switch (selectedObject?.data.type) {
-      case StageObjectType.IMAGE:
-        return <ImageEditing selectedObject={selectedObject} />;
-      case StageObjectType.SHAPE:
-        return <ShapesEditing selectedObject={selectedObject} />;
-      case StageObjectType.TEXT:
-        return <TextEditing selectedObject={selectedObject} />;
+    const tabs = [];
+
+    // Transform (always available)
+    if (availableFeatures.transform) {
+      tabs.push({
+        id: 'transform',
+        label: 'Transform',
+        icon: MdTransform,
+        color: 'blue'
+      });
+    }
+
+    // Color & Fill
+    if (availableFeatures.fill) {
+      tabs.push({
+        id: 'color',
+        label: 'Color',
+        icon: FaPalette,
+        color: 'pink'
+      });
+    }
+
+    // Shape-specific controls
+    if (availableFeatures.shapeSpecific) {
+      tabs.push({
+        id: 'shape',
+        label: 'Shape',
+        icon: FaShapes,
+        color: 'purple'
+      });
+    }
+
+    // Text controls
+    if (availableFeatures.textProperties) {
+      tabs.push({
+        id: 'text',
+        label: 'Text',
+        icon: FaFont,
+        color: 'green'
+      });
+    }
+
+    // Image controls
+    if (availableFeatures.imageFilters) {
+      tabs.push({
+        id: 'image',
+        label: 'Image',
+        icon: FaImage,
+        color: 'orange'
+      });
+    }
+
+    // Effects (shadows, etc.)
+    if (availableFeatures.shadow) {
+      tabs.push({
+        id: 'effects',
+        label: 'Effects',
+        icon: FaEye,
+        color: 'teal'
+      });
+    }
+
+    return tabs;
+  }, [isEditing, selectedObjectType, availableFeatures]);
+
+  const renderEditingControls = useCallback(() => {
+    if (!isEditing || !selectedObjectType || !editingData) {
+      return null;
+    }
+
+    switch (activeEditingPanel) {
+      case 'transform':
+        return <UniversalTransformControls />;
+      case 'color':
+        return <UniversalColorControls />;
+      case 'effects':
+        return <UniversalEffectsControls />;
+      case 'shape':
+        return <UniversalShapeControls />;
+      case 'text':
+        return <UniversalTextControls />;
+      case 'image':
+        return <UniversalImageControls />;
       default:
-        return null;
+        // Default to transform
+        return <UniversalTransformControls />;
     }
-  };
+  }, [isEditing, selectedObjectType, editingData, activeEditingPanel]);
 
   const handleViewChange = (index: number) => {
     if (!activeUnitId || !activeElevationId) return;
-
     const newView = index === 0 ? 'external' : 'internal';
     setActiveView(newView);
   };
 
   const currentTabIndex = activeView === 'external' ? 0 : 1;
+  const editingTabs = getEditingTabs();
 
   return (
-    <HStack
-      h={`${EDITING_TOOLBAR_CONFIG.height}px`}
-      id="editing_toolbar"
-      spacing={2}
-      sx={{ px: 4 }}
-      bgColor="white"
-      align="center"
-    >
-      {/*  Context-aware Undo/Redo with status indicators */}
-      <HStack spacing={2}>
-        <Tooltip
-          hasArrow
-          label={`Undo (${historyStatus.pastCount} actions) - Ctrl + Z`}
-          placement="bottom"
-          openDelay={500}
-        >
-          <div style={{ position: 'relative' }}>
+    <VStack spacing={0} w="100%">
+      {/* Main Toolbar */}
+      <HStack
+        h={`${EDITING_TOOLBAR_CONFIG.height}px`}
+        id="editing_toolbar"
+        spacing={2}
+        sx={{ px: 4 }}
+        bgColor="white"
+        align="center"
+        w="100%"
+      >
+        {/* Canvas History Controls */}
+        <HStack spacing={2}>
+          <Tooltip
+            hasArrow
+            label={`Canvas Undo (${historyStatus.pastCount} actions) - Ctrl + Z`}
+            placement="bottom"
+            openDelay={500}
+          >
+            <div style={{ position: 'relative' }}>
+              <IconButton
+                aria-label="Canvas Undo"
+                icon={<Icon as={HiOutlineReply} boxSize={5} />}
+                onClick={handleUndo}
+                size="sm"
+                colorScheme={historyStatus.canUndo ? "blue" : "gray"}
+                variant="outline"
+                isDisabled={!historyStatus.canUndo}
+              />
+              {historyStatus.pastCount > 0 && (
+                <Badge
+                  position="absolute"
+                  top="-2"
+                  right="-2"
+                  borderRadius="full"
+                  fontSize="xs"
+                  colorScheme="blue"
+                  variant="solid"
+                  minW="16px"
+                  h="16px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {historyStatus.pastCount > 99 ? '99+' : historyStatus.pastCount}
+                </Badge>
+              )}
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            hasArrow
+            label={`Canvas Redo (${historyStatus.futureCount} actions) - Ctrl + Y`}
+            placement="bottom"
+            openDelay={500}
+          >
+            <div style={{ position: 'relative' }}>
+              <IconButton
+                aria-label="Canvas Redo"
+                icon={<Icon as={HiOutlineReply} transform="scaleX(-1)" boxSize={5} />}
+                onClick={handleRedo}
+                size="sm"
+                colorScheme={historyStatus.canRedo ? "green" : "gray"}
+                variant="outline"
+                isDisabled={!historyStatus.canRedo}
+              />
+              {historyStatus.futureCount > 0 && (
+                <Badge
+                  position="absolute"
+                  top="-2"
+                  right="-2"
+                  borderRadius="full"
+                  fontSize="xs"
+                  colorScheme="green"
+                  variant="solid"
+                  minW="16px"
+                  h="16px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {historyStatus.futureCount > 99 ? '99+' : historyStatus.futureCount}
+                </Badge>
+              )}
+            </div>
+          </Tooltip>
+
+          <Tooltip hasArrow label="Reset zoom" placement="bottom" openDelay={500}>
             <IconButton
-              aria-label="Undo"
-              icon={<Icon as={HiOutlineReply} boxSize={5} />}
-              onClick={handleUndo}
+              aria-label="Reset zoom"
+              icon={<Icon as={TbZoomReset} boxSize={5} />}
+              onClick={resetZoom}
               size="sm"
-              colorScheme={historyStatus.canUndo ? "blue" : "gray"}
+              colorScheme="gray"
               variant="outline"
-              isDisabled={!historyStatus.canUndo}
             />
-            {/* Show past count as badge */}
-            {historyStatus.pastCount > 0 && (
-              <Badge
-                position="absolute"
-                top="-2"
-                right="-2"
-                borderRadius="full"
-                fontSize="xs"
-                colorScheme="blue"
-                variant="solid"
-                minW="16px"
-                h="16px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {historyStatus.pastCount > 99 ? '99+' : historyStatus.pastCount}
+          </Tooltip>
+
+          <Tooltip
+            hasArrow
+            label={`Toggle Grid (${GridSettings.showGrid ? 'Hide' : 'Show'}) - Ctrl + G`}
+            placement="bottom"
+            openDelay={500}
+          >
+            <IconButton
+              aria-label="Toggle grid"
+              icon={<Icon as={HiOutlineViewGrid} boxSize={5} />}
+              onClick={toggleGrid}
+              size="sm"
+              colorScheme={GridSettings.showGrid ? "pink" : "gray"}
+              variant="outline"
+            />
+          </Tooltip>
+        </HStack>
+
+        {/* Editing Status & Controls */}
+        {isEditing && (
+          <HStack spacing={2} bg="pink.50" px={3} py={1} borderRadius="md" border="1px solid" borderColor="pink.200">
+            <Badge colorScheme="pink" variant="solid">
+              Editing {selectedObjectType}
+            </Badge>
+            
+            {isDirty && (
+              <Badge colorScheme="orange" variant="outline">
+                Unsaved
               </Badge>
             )}
-          </div>
-        </Tooltip>
 
-        <Tooltip
-          hasArrow
-          label={`Redo (${historyStatus.futureCount} actions) - Ctrl + Y`}
-          placement="bottom"
-          openDelay={500}
-        >
-          <div style={{ position: 'relative' }}>
-            <IconButton
-              aria-label="Redo"
-              icon={<Icon as={HiOutlineReply} transform="scaleX(-1)" boxSize={5} />}
-              onClick={handleRedo}
-              size="sm"
-              colorScheme={historyStatus.canRedo ? "green" : "gray"}
+            <Button
+              size="xs"
+              leftIcon={<Icon as={FaSave} />}
+              colorScheme="green"
+              variant="solid"
+              onClick={applyChanges}
+              isDisabled={!isDirty}
+            >
+              Save
+            </Button>
+
+            <Button
+              size="xs"
+              colorScheme="gray"
               variant="outline"
-              isDisabled={!historyStatus.canRedo}
-            />
-            {/* Show future count as badge */}
-            {historyStatus.futureCount > 0 && (
-              <Badge
-                position="absolute"
-                top="-2"
-                right="-2"
-                borderRadius="full"
-                fontSize="xs"
-                colorScheme="green"
-                variant="solid"
-                minW="16px"
-                h="16px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {historyStatus.futureCount > 99 ? '99+' : historyStatus.futureCount}
-              </Badge>
-            )}
-          </div>
-        </Tooltip>
+              onClick={revert}
+              isDisabled={!isDirty}
+            >
+              Revert
+            </Button>
+          </HStack>
+        )}
 
-        <Tooltip hasArrow label="Reset zoom" placement="bottom" openDelay={500}>
-          <IconButton
-            aria-label="Reset zoom"
-            icon={<Icon as={TbZoomReset} boxSize={5} />}
-            onClick={resetZoom}
+        <Spacer />
+
+        {/* View Tabs - Centered */}
+        {EDITING_TOOLBAR_CONFIG.showViewToggle && (
+          <Tabs
             size="sm"
-            colorScheme="gray"
-            variant="outline"
-          />
-        </Tooltip>
-        <Tooltip
-          hasArrow
-          label={`Toggle Grid (${GridSettings.showGrid ? 'Hide' : 'Show'}) - Ctrl + G`}
-          placement="bottom"
-          openDelay={500}
-        >
-          <IconButton
-            aria-label="Toggle grid"
-            icon={<Icon as={HiOutlineViewGrid} boxSize={5} />}
-            onClick={toggleGrid}
-            size="sm"
-            colorScheme={GridSettings.showGrid ? "pink" : "gray"}
-            variant="outline"
-          />
-        </Tooltip>
+            colorScheme="pink"
+            isFitted
+            index={currentTabIndex}
+            onChange={handleViewChange}
+          >
+            <TabList>
+              <Tab whiteSpace="nowrap" px="4">External View</Tab>
+              <Tab whiteSpace="nowrap" px="4">Internal View</Tab>
+            </TabList>
+            <TabIndicator mt='-1.5px' height='2px' bg='pink.500' borderRadius='1px' />
+          </Tabs>
+        )}
+
+        <Spacer />
       </HStack>
 
-
-
-      {/* Editing Controls */}
-      {renderEditing()}
-
-      {/* View Tabs - Centered */}
-      <Spacer />
-      {EDITING_TOOLBAR_CONFIG.showViewToggle && (
-        <Tabs
-          size="sm"
-          colorScheme="pink"
-          isFitted
-          index={currentTabIndex}
-          onChange={handleViewChange}
+      {/* Editing Panel Tabs */}
+      {isEditing && editingTabs.length > 0 && (
+        <HStack
+          w="100%"
+          bg="gray.50"
+          borderTop="1px solid"
+          borderColor="gray.200"
+          px={4}
+          py={2}
+          spacing={1}
         >
-          <TabList>
-            <Tab whiteSpace="nowrap" px="4">External View</Tab>
-            <Tab whiteSpace="nowrap" px="4">Internal View</Tab>
-          </TabList>
-          <TabIndicator mt='-1.5px' height='2px' bg='pink.500' borderRadius='1px' />
-        </Tabs>
+          {editingTabs.map((tab) => (
+            <Button
+              key={tab.id}
+              size="sm"
+              leftIcon={<Icon as={tab.icon} />}
+              colorScheme={activeEditingPanel === tab.id ? tab.color : 'gray'}
+              variant={activeEditingPanel === tab.id ? 'solid' : 'ghost'}
+              onClick={() => setPanel(tab.id as any)}
+            >
+              {tab.label}
+            </Button>
+          ))}
+
+          <Spacer />
+
+          {/* Editing History Controls */}
+          <HStack spacing={1}>
+            <Tooltip label="Undo Edit (Ctrl+Z)" placement="bottom">
+              <IconButton
+                aria-label="Undo edit"
+                icon={<Icon as={HiOutlineReply} boxSize={4} />}
+                size="sm"
+                variant="ghost"
+                onClick={undoEdit}
+                isDisabled={!editingData}
+              />
+            </Tooltip>
+
+            <Tooltip label="Redo Edit (Ctrl+Y)" placement="bottom">
+              <IconButton
+                aria-label="Redo edit"
+                icon={<Icon as={HiOutlineReply} transform="scaleX(-1)" boxSize={4} />}
+                size="sm"
+                variant="ghost"
+                onClick={redoEdit}
+                isDisabled={!editingData}
+              />
+            </Tooltip>
+          </HStack>
+        </HStack>
       )}
 
-      <Spacer />
-    </HStack>
+      {/* Active Editing Controls */}
+      {isEditing && (
+        <HStack
+          w="100%"
+          bg="white"
+          borderTop="1px solid"
+          borderColor="gray.200"
+          px={4}
+          py={3}
+          minH="60px"
+          align="center"
+          justify="flex-start"
+          overflowX="auto"
+        >
+          {renderEditingControls()}
+        </HStack>
+      )}
+    </VStack>
   );
 };
 

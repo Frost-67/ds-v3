@@ -5,7 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import bottomTabsReducer from './slices/bottom-tabs-slice';
 import rightSidebarReducer from './slices/right-sidebar-slice';
 import canvasContextsReducer from './slices/canvas-contexts-slice';
-
+import editingReducer from './slices/editing-slice';
 const persistConfig = {
   key: 'root',
   storage,
@@ -19,6 +19,7 @@ const persistedReducer = persistReducer(
     bottomTabs: bottomTabsReducer,
     rightSidebar: rightSidebarReducer,
     canvasContexts: canvasContextsReducer,
+    editing: editingReducer,
   }),
 );
 

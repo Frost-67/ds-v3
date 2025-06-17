@@ -50,7 +50,7 @@ export const useCanvasContexts = () => {
             y: element.y,
             width: element.width || 100,
             height: element.height || 100,
-            draggable: element.draggable !== false,
+            draggable: true,
             z_index: element.z_index || 0,
             updatedAt: element.updatedAt || Date.now(),
             offsetX: element.offsetX || 0,
